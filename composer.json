@@ -1,0 +1,14 @@
+{
+    "name": "neby55/projet-toto",
+    "description": "Gestion des etudiants de session de formation Webforce3",
+    "type": "project",
+    "authors": [
+        {
+            "name": "neby55",
+            "email": "ben@progweb.fr"
+        }
+    ],
+    "require": {
+        "social-links/social-links": "^1.13"
+    }
+}

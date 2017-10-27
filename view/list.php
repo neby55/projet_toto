@@ -10,6 +10,7 @@ Je suis sur la page <strong>LISTE</strong>.
 			<th>Prénom</th>
 			<th>Email</th>
 			<th>Date de naissance</th>
+			<th>&nbsp;</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -20,6 +21,9 @@ Je suis sur la page <strong>LISTE</strong>.
 			<td><?= $currentStudent['stu_firstname'] ?></td>
 			<td><?= $currentStudent['stu_email'] ?></td>
 			<td><?= $currentStudent['stu_birthdate'] ?></td>
+			<td>
+				<a href="student.php?id=<?= $currentStudent['stu_id'] ?>" class="btn btn-success">details</a>
+			</td>
 		</tr>
 	<?php endforeach; ?>
 	</tbody>
