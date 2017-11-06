@@ -18,10 +18,24 @@ if (!empty($_POST)) {
 			if (!empty($csvFile)) {
 				// Validations
 				$formOk = true;
+
+				// Vérifie la taille du fichier (v1)
+				if ($csvFile['size'] > 100000) {
+					echo 'Fichier trop lourd, 100Ko max<br>';
+					$formOk = false;
+				}
+
+				// Vérifie la taille du fichier (v2)
+				if (filesize($csvFile['tmp_name']) > 100000) {
+					echo 'Fichier trop lourd, 100Ko max<br>';
+					$formOk = false;
+				}
+
 				if (!in_array($csvFile['type'], array('application/octet-stream', 'text/csv'))) {
 					echo 'Fichier incorrect<br>';
 					$formOk = false;
 				}
+
 				$dotPosition = strrpos($csvFile['name'], '.'); // Récupère la position du dernier . dans la string
 				$extension = substr($csvFile['name'], $dotPosition+1);
 				if (!in_array($extension, array('csv'))) {
@@ -87,8 +101,14 @@ if (!empty($_POST)) {
 		$pdoStatement = $pdo->query($sql);
 
 		if ($pdoStatement && $pdoStatement->rowCount() > 0) {
+			$exportFilename = 'export-'.date('Ymd').'.csv';
+			// Je vérifie si il existe
+			if (file_exists($exportFilename)) {
+				// Je supprime le fichier existant
+				unlink($exportFilename);
+			}
 			// J'ouvre le fichier en écriture
-			$fw = fopen('export-'.date('Ymd').'.csv', 'w');
+			$fw = fopen($exportFilename, 'w');
 			if ($fw) {
 				while (($row = $pdoStatement->fetch(PDO::FETCH_ASSOC)) !== false) {
 					// Je crée la ligne du CSV
