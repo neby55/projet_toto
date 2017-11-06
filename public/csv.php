@@ -87,9 +87,16 @@ if (!empty($_POST)) {
 		$pdoStatement = $pdo->query($sql);
 
 		if ($pdoStatement && $pdoStatement->rowCount() > 0) {
-			// TODO écrire dans le fichier
-			while (($row = $pdoStatement->fetch(PDO::FETCH_ASSOC)) !== false) {
-				print_pre($row);
+			// J'ouvre le fichier en écriture
+			$fw = fopen('export-'.date('Ymd').'.csv', 'w');
+			if ($fw) {
+				while (($row = $pdoStatement->fetch(PDO::FETCH_ASSOC)) !== false) {
+					// Je crée la ligne du CSV
+					$line = implode(';', $row);
+					// J'ajoute la ligne au fichier
+					fwrite($fw, $line.PHP_EOL);
+				}
+				fclose($fw);
 			}
 		}
 	}
