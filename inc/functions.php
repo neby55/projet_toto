@@ -17,3 +17,7 @@ function getSympathieList() {
 		5 => 'Génial',
 	);
 }
+
+function print_pre($var) {
+	echo '<pre>'.print_r($var,1).'</pre>';
+}

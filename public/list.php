@@ -21,11 +21,29 @@ if ($offset < 0) {
 	$offset = 0;
 }
 
-$sql = '
-	SELECT *
-	FROM student
-	LIMIT 3 OFFSET '.$offset;
-$pdoStatement = $pdo->query($sql);
+// Récupération du terme recherché
+$search = isset($_GET['s']) ? trim($_GET['s']) : '';
+// Si recherche, ma requête effectue une recherche et ne fait pas de pagination
+if (!empty($search)) {
+	$sql = '
+		SELECT *
+		FROM student
+		WHERE stu_lastname LKE :search
+		OR stu_firstname LIKE :search
+		OR stu_email LIKE :search
+	';
+	$pdoStatement = $pdo->prepare($sql);
+	$pdoStatement->bindValue(':search', '%'.$search.'%');
+	$pdoStatement->execute();
+}
+// Sinon, on prend tous les étudiants, et on fait la pagination
+else {
+	$sql = '
+		SELECT *
+		FROM student
+		LIMIT 3 OFFSET '.$offset;
+	$pdoStatement = $pdo->query($sql);
+}
 
 if ($pdoStatement === false) {
 	print_r($pdo->errorInfo());
