@@ -33,6 +33,7 @@
 	        <li><a href="add.php">Ajouter un étudiant</a></li>
 	        <li><a href="csv.php">CSV</a></li>
 	        <li><a href="signup.php">Sign up</a></li>
+	        <li><a href="signin.php">Sign in</a></li>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
