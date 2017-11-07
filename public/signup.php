@@ -27,31 +27,41 @@ if (!empty($_POST)) {
 	if (empty($password) || empty($password2)) {
 		$errorList['password'] = 'Mot de passe vide';
 	}
+	else if (strlen($password) < 8) {
+		$errorList['password'] = 'Le mot de passe doit contenir au moins 8 caractères';
+	}
 	else if ($password != $password2) {
 		$errorList['password'] = 'Les 2 mots de passe sont différents';
 	}
 
 	// Si aucune erreur
 	if (empty($errorList)) {
-		// Je créé la version hashée du mot de passe
-		$passwordHashed = password_hash($password, PASSWORD_BCRYPT);
-
-		// Je prépare ma requête d'insertion
-		$sql = '
-			INSERT INTO `user` (usr_email, usr_password)
-			VALUES (:email, :password)
-		';
-		$pdoStatement = $pdo->prepare($sql);
-		$pdoStatement->bindValue(':email', $email);
-		$pdoStatement->bindValue(':password', $passwordHashed);
-
-		// Si erreur à l'exécution
-		if ($pdoStatement->execute() === false) {
-			print_r($pdoStatement->errorInfo());
-			exit;
+		// J'appelle la fonction que j'ai créé qui renvoie true/false si email existe ou non
+		if (emailExists($email)) {
+			$errorList['email'] = 'Email déjà dans la DB';
 		}
+		// Sinon, j'insère le user
+		else {
+			// Je créé la version hashée du mot de passe
+			$passwordHashed = password_hash($password, PASSWORD_BCRYPT);
 
-		$successList[] = 'Inscription réussie !!<br>';
+			// Je prépare ma requête d'insertion
+			$sql = '
+				INSERT INTO `user` (usr_email, usr_password, usr_date_creation)
+				VALUES (:email, :password, NOW())
+			';
+			$pdoStatement = $pdo->prepare($sql);
+			$pdoStatement->bindValue(':email', $email);
+			$pdoStatement->bindValue(':password', $passwordHashed);
+
+			// Si erreur à l'exécution
+			if ($pdoStatement->execute() === false) {
+				print_r($pdoStatement->errorInfo());
+				exit;
+			}
+
+			$successList[] = 'Inscription réussie !!<br>';
+		}
 	}
 }
 
