@@ -32,8 +32,13 @@
 	        <li><a href="list.php">Tous les étudiants</a></li>
 	        <li><a href="add.php">Ajouter un étudiant</a></li>
 	        <li><a href="csv.php">CSV</a></li>
-	        <li><a href="signup.php">Sign up</a></li>
-	        <li><a href="signin.php">Sign in</a></li>
+	        <?php if (empty($_SESSION['userId'])) : ?>
+		        <li><a href="signup.php">Sign up</a></li>
+		        <li><a href="signin.php">Sign in</a></li>
+	    	<?php else : ?>
+	        	<li>User <?= $_SESSION['userId'] ?><br>Role <?= $_SESSION['userRole'] ?></li>
+	        	<li><a href="logout.php">Logout</a></li>
+	    	<?php endif; ?>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->

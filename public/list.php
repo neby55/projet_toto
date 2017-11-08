@@ -2,6 +2,12 @@
 
 require_once __DIR__.'/../inc/config.php';
 
+// Check authorization
+if (empty($_SESSION['userId'])) {
+	header('Location: signin.php');
+	exit;
+}
+
 $studentList = array();
 // Page sasie dans l'URL
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;

@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 // Données de configuration
 $config = array(
 	'DB_HOST' => '',
