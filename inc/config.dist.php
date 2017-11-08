@@ -5,7 +5,10 @@ $config = array(
 	'DB_HOST' => '',
 	'DB_USER' => '',
 	'DB_PASSWORD' => '',
-	'DB_DATABASE' => ''
+	'DB_DATABASE' => '',
+    'MAIL_HOST' => '',
+    'MAIL_USERNAME' => '',
+    'MAIL_PASSWORD' => '',
 );
 
 // Inclusions de fichiers

@@ -42,6 +42,11 @@ if (!empty($_POST)) {
 				$successList[] = 'User connecté !!!!';
 				$successList[] = 'UserID = '.$userInfos['usr_id'];
 				$successList[] = 'IP = '.$_SERVER['REMOTE_ADDR'];
+
+				// J'ajoute en session
+				$_SESSION['userId'] = $userInfos['usr_id'];
+				$_SESSION['userRole'] = $userInfos['usr_role'];
+				$_SESSION['userIpAddress'] = $_SERVER['REMOTE_ADDR'];
 			}
 			else {
 				$errorList['password'] = 'Password erroné';

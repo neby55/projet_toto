@@ -1,4 +1,10 @@
 <?php
+// Import PHPMailer classes into the global namespace
+// These must be at the top of your script, not inside a function
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// Don't forget "composer require" in the projet toto
 
 function getSympathieLabel($friendliness) {
 	$sympathieList = getSympathieList();
@@ -60,4 +66,14 @@ function getUserByEmail($emailAddress) {
 
 	// Si il existe un email => au moins 1 ligne de résultat
 	return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function sendEmail($to, $subject, $htmlContent, $textContent='') {
+	global $config;
+    // TODO move the phpmailer code here, and replace some strings with parameters
+
+	// Avec la config
+	$mail->Host = $config['MAIL_HOST'];
+    $mail->Username = $config['MAIL_USERNAME'];
+    $mail->Password = $config['MAIL_PASSWORD'];
 }
