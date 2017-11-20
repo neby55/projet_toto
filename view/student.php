@@ -1,3 +1,4 @@
+<a href="javascript:$('#popupStudent').hide();">Fermer</a>
 <div class="panel panel-primary">
 	<div class="panel-heading">#<?= $studentId ?> <?= $studentInfos['stu_lastname'] ?> <?= $studentInfos['stu_firstname'] ?></div>
 	<div class="panel-body">
